@@ -170,9 +170,8 @@ void doKeyBoardMouse(int thisVal) {
         delay(200);
         Keyboard.press(KEY_TAB);
         delay(300);
-        Keyboard.release(KEY_TAB);
-        delay(100);
-
+        Keyboard.release(KEY_TAB);  //needed to continue tabbing thru apps otherwise only tabs once to the end
+        delay(100); // smaller delays here make the tab thru apps too fast - increasing slows down but doesn't help
       }
 
       if (y < 0.45 ) {
@@ -281,7 +280,7 @@ void doKeyBoardMouse(int thisVal) {
       //      doHaptics(64);
       if (x <= -0.87) {
         showDocs = true; // boolean used to keep docs view active
-        doHaptics(64);
+       // doHaptics(64);
         while (showDocs == true) {
           Keyboard.press(KEY_F1);
           delay(200);
