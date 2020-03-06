@@ -6,9 +6,6 @@
 
 Adafruit_DRV2605 drv;
 
-const int sensitivity = 100; //higher sensitivity value = slower mouse movement should be <= 600
-int mouseClickFlag = 0;
-
 char ctrlKey = KEY_LEFT_GUI;
 int  doIt = 0;
 float x, y, z, delta, x11, y13 , xL, xR, yU, yD;
@@ -158,7 +155,6 @@ void doKeyBoardMouse(int thisVal) {
       Serial.println("case 0");
 
       break;
-
 
     // TAB THROUGH APPS
     case 8:
