@@ -174,7 +174,7 @@ void doKeyBoardMouse(int thisVal) {
         delay(100); // smaller delays here make the tab thru apps too fast - increasing slows down but doesn't help
       }
 
-      if (y < 0.45 ) {
+      if (y < 0.45 ) { // turning HID back to right releases ALL and selects the desired app
 
         Keyboard.releaseAll();
         doHaptics(119);
