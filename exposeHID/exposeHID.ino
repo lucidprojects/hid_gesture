@@ -21,6 +21,7 @@
    ExposéHID uses Keyboard.h & Mouse.h to control computer keyboard and mouse functions
    Arduino Nano 33 IoT's built in IMU with LSM6DS3.h lib for gestures
    Adafruit DRV2605 for haptic feedback
+   CapacitiveSensor.h for capacitive button smoothing
 
    Adapted IMU and threshold code from Atharva Punch Punch Revolution
    https://github.com/atharvapatil/punch-punch-revolution
