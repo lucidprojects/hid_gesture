@@ -16,13 +16,21 @@ boolean showApps = false;
 boolean launchPad = false;
 float aSum;
 
-int mouseBtn = 2;  //mouse switch
+//int mouseBtn = 2;  //mouse switch
+int mouseBtn = 4; //mouse switch
+
 
 int mouseBtnPushCounter = 0; // counter for the number of btn presses
 int mouseBtnbuttonState = 0; // current state of the button
 int mouseBtnLastButtonState = 0; //previous state of the button
 
-int led1 = 9;
+//int led1 = 9;
+//int led1 = 2;
+
+int red = 6; //this sets the red led pin
+int green = 3; //this sets the green led pin
+int blue = 2; //this sets the blue led pin
+
 
 int lpleft = 1;
 int lpright = 1;
@@ -30,8 +38,11 @@ int lpright = 1;
 void setup() {
   Serial.begin(9600);
 
-  pinMode(mouseBtn, INPUT);
-  pinMode(led1, OUTPUT);
+  pinMode(mouseBtn, INPUT_PULLUP);
+  //  pinMode(led1, OUTPUT);
+  pinMode(red, OUTPUT);
+  pinMode(green, OUTPUT);
+  pinMode(blue, OUTPUT);
 
   if (!IMU.begin())
   {
@@ -46,7 +57,8 @@ void setup() {
   drv.begin();
   drv.selectLibrary(1);
   drv.setMode(DRV2605_MODE_INTTRIG);
-
+  // digitalWrite(led1, HIGH);
+  analogWrite(red,HIGH);
 }
 
 void loop() {
@@ -70,11 +82,13 @@ void loop() {
   mouseBtnLastButtonState = mouseBtnbuttonState;
 
   if (mouseBtnPushCounter % 2 == 0) {
-    digitalWrite(led1, HIGH);
+    //digitalWrite(led1, HIGH);
+    digitalWrite(green, HIGH);
+
 
   } else {
-    digitalWrite(led1, LOW);
-
+    //    digitalWrite(led1, LOW);
+    digitalWrite(green, LOW);
   }
   //END MOUSE CLICK CODE
 
@@ -132,10 +146,10 @@ void loop() {
     else if (x < -0.80) {
       Serial.println("back");
       doKeyBoardMouse(10); // ALL OPEN DOCS IN APP
-    }else{
-      
+    } else {
+
     }
-    
+
     // end if IMU avail
   }
 
@@ -161,7 +175,8 @@ void doKeyBoardMouse(int thisVal) {
       Serial.println("sent val 8");
       Serial.println("cmd tab- case 8");
       doHaptics(64);
-      digitalWrite(led1, HIGH);
+      //      digitalWrite(led1, HIGH);
+      digitalWrite(green, HIGH);
       while (y >= 0.5) {
         IMU.readAcceleration(x, y, z);
         Serial.print("my y val in app tab case = ");
@@ -178,7 +193,7 @@ void doKeyBoardMouse(int thisVal) {
 
         Keyboard.releaseAll();
         doHaptics(119);
-        digitalWrite(led1, LOW);
+        digitalWrite(green, LOW);
         // delay(200);
 
       }
@@ -189,7 +204,8 @@ void doKeyBoardMouse(int thisVal) {
     //  OPEN LAUNCHPAD
     case 9:
       Serial.println("cmd tab- case 9");
-      digitalWrite(led1, HIGH);
+      //      digitalWrite(led1, HIGH);
+      digitalWrite(green, HIGH);
       // doHaptics(64);
       Keyboard.press(KEY_LEFT_GUI);
       Keyboard.press(' ');
@@ -264,7 +280,7 @@ void doKeyBoardMouse(int thisVal) {
 
           }
         }
-        if (digitalRead(mouseBtn) == HIGH) {
+        if (digitalRead(mouseBtn) == LOW) {
           mouseClick();
 
         }
@@ -276,11 +292,12 @@ void doKeyBoardMouse(int thisVal) {
     //  OPEN SCROLL THRU DOCUMENTS
     case 10:
       Serial.println("cmd tab- case 10");
-      digitalWrite(led1, HIGH);
+      //      digitalWrite(led1, HIGH);
+      digitalWrite(green, HIGH);
       //      doHaptics(64);
       if (x <= -0.87) {
         showDocs = true; // boolean used to keep docs view active
-       // doHaptics(64);
+        // doHaptics(64);
         while (showDocs == true) {
           Keyboard.press(KEY_F1);
           delay(200);
@@ -306,7 +323,9 @@ void doKeyBoardMouse(int thisVal) {
     //  SHOW ALL APPS
     case 11:
       Serial.println(x);
-      digitalWrite(led1, HIGH);
+      //      digitalWrite(led1, HIGH);
+      digitalWrite(green, LOW);
+       digitalWrite(blue, HIGH);
       //      doHaptics(64);
       if (x >= 0.87) {
         showApps = true; // boolean used to keep apps view active
@@ -388,7 +407,7 @@ void doMouseMove() {
     mouseClick();
   }
 
-  if (digitalRead(mouseBtn) == HIGH) {
+  if (digitalRead(mouseBtn) == LOW) {
     mouseClick();
   }
 
@@ -405,7 +424,8 @@ void mouseClick() {
   launchPad = false;
   Serial.println("mouse whip click here - in mouseMove ");
   doHaptics(119);
-  digitalWrite(led1, LOW);
+  digitalWrite(green, LOW);
+  digitalWrite(blue, LOW);
 
 }
 
